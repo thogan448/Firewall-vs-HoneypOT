@@ -13,18 +13,18 @@ using namespace std;
 
 std::vector<std::string> ipsCsv;
 std::vector<std::string> Ips;
+std::vector<std::string> matches;
 // driver code
 
 
-void text(){
+void text(string filename){
     fstream file;
     string line;
     string substring="IP <";
     string substring2=">";
    
     ifstream infile;
-   
-    infile.open("cisco-asa-2018-07-27.txt");
+    infile.open( filename.c_str() );
     
     if (infile.fail()){
         cout<<"Error opening";
@@ -43,8 +43,8 @@ void text(){
 }
 
 
-void csv(){
-    ifstream ips("Export_allActivity.csv");
+void csv(string filenameCSV){
+    ifstream ips(filenameCSV);
     string dummyline;
     getline(ips,dummyline);
 
@@ -81,20 +81,33 @@ void compare(){
     for (int i=0;i<ipsCsv.size();i++){
         for (int j=0;j<Ips.size();j++){
             if (ipsCsv[i]==Ips[j]){
+                matches.push_back(Ips[j]);
                 cout<<Ips[j]<<endl;
             }
         
         }
     }
-    cout<<"no matches"<<endl;
+    if (matches.size()==0){
+        cout<<"No matches"<<endl;
+    }
     
 }
 
 int main()
 {
     // filestream variable file
-    text();
-    csv();
+    string filename;
+    string filenameCSV;
+
+    cout<<"Please enter file name for firewall data: ";
+    cin>>filename;
+
+    cout<<"Please enter name of Honeypot CSV: ";
+    cin>>filenameCSV;
+
+    cout<<"One moment, matches will be listed below:"<<endl;
+    text(filename);
+    csv(filenameCSV);
     compare();
     return 1;
 }
