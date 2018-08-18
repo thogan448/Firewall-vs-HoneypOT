@@ -1,1 +1,1 @@
-# Test
+This code takes firewall data and compares it to local honeypot data. The script asks the user to input the name of the firewall data document and the honeypot data CSV file. It then finds if there are any matching IP addresses between the two files.
